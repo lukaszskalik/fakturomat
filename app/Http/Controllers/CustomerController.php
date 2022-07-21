@@ -16,7 +16,7 @@ class CustomerController extends Controller
     {
 
         $customers = Customer::all();
-        return view('customers.index', ['list' => $customers]);
+        return view('customers.index', ['customers' => $customers]);
     }
 
     /**
@@ -26,7 +26,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('customers.create');
     }
 
     /**
@@ -37,7 +37,14 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $customer = new Customer();
+        $customer->name = $request->name;
+        $customer->address = $request->address;
+        $customer->nip = $request->nip;
+
+        $customer->save();
+
+        return redirect()->route('customers.index')->with('messege', 'Dodano nowego Klienta');
     }
 
     /**
@@ -59,7 +66,8 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $customer = Customer::find($id);
+        return view('customers.edit', ['customer' => $customer]);
     }
 
     /**
@@ -71,7 +79,14 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $customer = Customer::find($id);
+        $customer->name = $request->name;
+        $customer->address = $request->address;
+        $customer->nip = $request->nip;
+
+        $customer->save();
+
+        return redirect()->route('customers.index')->with('messege', 'Dane Klienta zostały zmienione poprawnie');
     }
 
     /**
@@ -82,6 +97,7 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Customer::destroy($id);
+        return redirect()->route('customers.index')->with('messege', 'Klient został usunięty z bazy');
     }
 }

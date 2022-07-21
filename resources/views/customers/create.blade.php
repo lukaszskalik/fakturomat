@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    
+
         <!-- Contact Section-->
         <section class="masthead page-section" id="contact">
             <div class="container">
                 <!-- Contact Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Dodaj nową Fakturę</h2>
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Dodaj Klienta</h2>
                 <!-- Icon Divider-->
                 <div class="divider-custom">
                     <div class="divider-custom-line"></div>
@@ -23,28 +23,27 @@
                         <!-- To make this form functional, sign up at-->
                         <!-- https://startbootstrap.com/solution/contact-forms-->
                         <!-- to get an API token!-->
-                        <form action="{{ route('invoices.store') }}" method="POST" id="invoicesAdd" data-sb-form-api-token="API_TOKEN">
+                        <form action="{{ route('customers.store') }}" method="POST" id="invoicesAdd" data-sb-form-api-token="API_TOKEN">
                             {{ csrf_field() }}
                             <!-- Name input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="number" type="text" name="number" placeholder="Numer Faktury" data-sb-validations="required" />
-                                <label for="number">Numer Faktury</label>
+                                <input class="form-control" id="name" type="text" name="name" placeholder="Nazwa Klienta" data-sb-validations="required" />
+                                <label for="name">Nazwa Klienta</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
                             </div>
                             <!-- Email address input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="total" type="text" name="total" placeholder="Kwota Faktury" data-sb-validations="required" />
-                                <label for="total">Kwota Faktury</label>
-                                <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                                <input class="form-control" id="address" type="text" name="address" placeholder="Adres" data-sb-validations="required" />
+                                <label for="address">Adres Klienta</label>
+                                <div class="invalid-feedback" data-sb-feedback="address:required">An address is required.</div>
                             </div>
                             <!-- Phone number input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="date" type="text" name="date" placeholder="xxxx-xx-xx" data-sb-validations="required" />
-                                <label for="date">Data Faktury</label>
-                                <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                                <input class="form-control" id="nip" type="text" name="nip" placeholder="1234567890" data-sb-validations="required" />
+                                <label for="nip">NIP</label>
+                                <div class="invalid-feedback" data-sb-feedback="nip:required">A NIP number is required.</div>
                             </div>
-                            
+
                             <!-- Submit success message-->
                             <!---->
                             <!-- This is what your users will see when the form-->

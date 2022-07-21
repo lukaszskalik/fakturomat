@@ -31,7 +31,5 @@ Route::delete('/faktury/usun/{id}', [InvoicesController::class, 'delete'])->name
 
 Route::post('/faktury/zapisz', [InvoicesController::class, 'store'])->name('invoices.store');
 
-Route::resource('klienci', CustomerController::class)->names([
-    'klienci' => 'customers.index'
-]);
+Route::resource('klienci', CustomerController::class, ['names' => 'customers']);
 

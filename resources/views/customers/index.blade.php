@@ -24,31 +24,31 @@
                     <thead>
                       <tr>
                         <th scope="col">Id</th>
-                        <th scope="col">Numer Faktury</th>
-                        <th scope="col">Kwota</th>
-                        <th scope="col">Data</th>
+                        <th scope="col">Nazwa</th>
+                        <th scope="col">Adres</th>
+                        <th scope="col">NIP</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
                       </tr>
                     </thead>
 
                     <tbody>
-                       <!-- @foreach ($list as $invoice)
+                        @foreach ($customers as $customer)
                         <tr>
-                            <th scope="row">{{$invoice->id}}</th>
-                            <td>{{$invoice->number}}</td>
-                            <td>{{$invoice->total}}</td>
-                            <td>{{$invoice->date}}</td>
-                            <td><a href="{{ route('invoices.edit', ['id' => $invoice->id]) }}" class="btn btn-success">Edytuj</a></td>
+                            <th scope="row">{{$customer->id}}</th>
+                            <td>{{$customer->name}}</td>
+                            <td>{{$customer->address}}</td>
+                            <td>{{$customer->nip}}</td>
+                            <td><a href="{{ route('customers.edit', ['klienci' => $customer->id]) }}" class="btn btn-success">Edytuj</a></td>
                             <td>
-                              <form method="POST" action="{{ route('invoices.delete', ['id' => $invoice->id]) }}">
+                              <form method="POST" action="{{ route('customers.destroy', ['klienci' => $customer->id]) }}">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger">usuń</button>
                               </form>
                             </td>
                         </tr>
-                        @endforeach-->
+                        @endforeach
                     </tbody>
 
                   </table>
