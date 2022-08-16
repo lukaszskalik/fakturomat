@@ -26,18 +26,20 @@
                         <th scope="col">Id</th>
                         <th scope="col">Numer Faktury</th>
                         <th scope="col">Kwota</th>
+                        <th scope="col">Klient</th>
                         <th scope="col">Data</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
                       </tr>
                     </thead>
-                    
+
                     <tbody>
                         @foreach ($list as $invoice)
                         <tr>
                             <th scope="row">{{$invoice->id}}</th>
                             <td>{{$invoice->number}}</td>
                             <td>{{$invoice->total}}</td>
+                            <td>{{$invoice->customer->name}}</td>
                             <td>{{$invoice->date}}</td>
                             <td><a href="{{ route('invoices.edit', ['id' => $invoice->id]) }}" class="btn btn-success">Edytuj</a></td>
                             <td>
@@ -50,7 +52,7 @@
                         </tr>
                         @endforeach
                     </tbody>
-                    
+
                   </table>
             </div>
         </section>

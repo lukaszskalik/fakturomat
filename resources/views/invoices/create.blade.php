@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    
+
         <!-- Contact Section-->
         <section class="masthead page-section" id="contact">
             <div class="container">
@@ -25,6 +25,16 @@
                         <!-- to get an API token!-->
                         <form action="{{ route('invoices.store') }}" method="POST" id="invoicesAdd" data-sb-form-api-token="API_TOKEN">
                             {{ csrf_field() }}
+                            <!-- Customer-->
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Wybierz klienta</label>
+                                <select name="customer" class="form-select" id="inputGroupSelect01">
+                                  <option selected>Wybierz...</option>
+                                    @foreach ($customers as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <!-- Name input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="number" type="text" name="number" placeholder="Numer Faktury" data-sb-validations="required" />
@@ -44,7 +54,7 @@
                                 <label for="date">Data Faktury</label>
                                 <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
                             </div>
-                            
+
                             <!-- Submit success message-->
                             <!---->
                             <!-- This is what your users will see when the form-->
