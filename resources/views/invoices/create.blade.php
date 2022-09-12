@@ -13,6 +13,15 @@
                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <!-- Contact Section Form-->
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-xl-7">
@@ -28,7 +37,7 @@
                             <!-- Customer-->
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="inputGroupSelect01">Wybierz klienta</label>
-                                <select name="customer" class="form-select" id="inputGroupSelect01">
+                                <select  name="customer" class="form-select" id="inputGroupSelect01">
                                   <option selected>Wybierz...</option>
                                     @foreach ($customers as $item)
                                     <option value="{{$item->id}}">{{$item->name}}</option>
@@ -37,20 +46,20 @@
                             </div>
                             <!-- Name input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="number" type="text" name="number" placeholder="Numer Faktury" data-sb-validations="required" />
+                                <input class="form-control" id="number" type="text" value="{{ old('number') }}" name="number" placeholder="Numer Faktury" data-sb-validations="required" />
                                 <label for="number">Numer Faktury</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
                             </div>
                             <!-- Email address input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="total" type="text" name="total" placeholder="Kwota Faktury" data-sb-validations="required" />
+                                <input class="form-control" id="total" type="text" value="{{ old('total') }}" name="total" placeholder="Kwota Faktury" data-sb-validations="required" />
                                 <label for="total">Kwota Faktury</label>
                                 <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                                 <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                             </div>
                             <!-- Phone number input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="date" type="text" name="date" placeholder="xxxx-xx-xx" data-sb-validations="required" />
+                                <input class="form-control" id="date" type="text" value="{{ old('date') }}" name="date" placeholder="xxxx-xx-xx" data-sb-validations="required" />
                                 <label for="date">Data Faktury</label>
                                 <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
                             </div>
