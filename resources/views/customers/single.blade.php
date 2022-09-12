@@ -13,7 +13,13 @@
                 </div>
                 @endif
                 <!-- Portfolio Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Lista Klientów</h2>
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Dane klienta</h2>
+                <p>{{ $customer->name }}</p>
+                <p>{{ $customer->address }}</p>
+                <p>{{ $customer->nip }}</p>
+
+                <!-- Portfolio Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Lista faktur powiązanych</h2>
                 <!-- Icon Divider-->
                 <div class="divider-custom">
                     <div class="divider-custom-line"></div>
@@ -24,24 +30,24 @@
                     <thead>
                       <tr>
                         <th scope="col">Id</th>
-                        <th scope="col">Nazwa</th>
-                        <th scope="col">Adres</th>
-                        <th scope="col">NIP</th>
+                        <th scope="col">Numer Faktury</th>
+                        <th scope="col">Kwota</th>
+                        <th scope="col">Data</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
                       </tr>
                     </thead>
 
                     <tbody>
-                        @foreach ($customers as $customer)
+                        @foreach ($customer->invoices as $invoice)
                         <tr>
-                            <th scope="row">{{$customer->id}}</th>
-                            <td><a href="{{ route('customers.show', ['klienci' => $customer->id]) }}">{{$customer->name}}</a></td>
-                            <td>{{$customer->address}}</td>
-                            <td>{{$customer->nip}}</td>
-                            <td><a href="{{ route('customers.edit', ['klienci' => $customer->id]) }}" class="btn btn-success">Edytuj</a></td>
+                            <th scope="row">{{$invoice->id}}</th>
+                            <td>{{$invoice->number}}</td>
+                            <td>{{$invoice->total}}</td>
+                            <td>{{$invoice->date}}</td>
+                            <td><a href="{{ route('invoices.edit', ['id' => $invoice->id]) }}" class="btn btn-success">Edytuj</a></td>
                             <td>
-                              <form method="POST" action="{{ route('customers.destroy', ['klienci' => $customer->id]) }}">
+                              <form method="POST" action="{{ route('invoices.delete', ['id' => $invoice->id]) }}">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger">usuń</button>

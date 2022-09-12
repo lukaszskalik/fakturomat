@@ -55,7 +55,9 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        $customer = Customer::with('invoices')->where('id', $id)->firstOrFail();
+
+        return view('customers.single', compact('customer'));
     }
 
     /**
