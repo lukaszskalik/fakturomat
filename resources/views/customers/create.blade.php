@@ -13,6 +13,15 @@
                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <!-- Contact Section Form-->
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-xl-7">
@@ -27,19 +36,19 @@
                             {{ csrf_field() }}
                             <!-- Name input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="name" type="text" name="name" placeholder="Nazwa Klienta" data-sb-validations="required" />
+                                <input class="form-control" id="name" type="text" value=" {{ old('name') }}" name="name" placeholder="Nazwa Klienta" data-sb-validations="required" />
                                 <label for="name">Nazwa Klienta</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
                             </div>
                             <!-- Email address input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="address" type="text" name="address" placeholder="Adres" data-sb-validations="required" />
+                                <input class="form-control" id="address" type="text" value=" {{ old('address') }}" name="address" placeholder="Adres" data-sb-validations="required" />
                                 <label for="address">Adres Klienta</label>
                                 <div class="invalid-feedback" data-sb-feedback="address:required">An address is required.</div>
                             </div>
                             <!-- Phone number input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="nip" type="text" name="nip" placeholder="1234567890" data-sb-validations="required" />
+                                <input class="form-control" id="nip" type="text" value=" {{ old('nip') }}" name="nip" placeholder="1234567890" data-sb-validations="required" />
                                 <label for="nip">NIP</label>
                                 <div class="invalid-feedback" data-sb-feedback="nip:required">A NIP number is required.</div>
                             </div>
