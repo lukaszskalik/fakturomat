@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InvoicesController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,18 +19,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+Route::middleware('auth')->group(function() {
+    Route::get('/faktury', [InvoicesController::class, 'index'])->name('invoices.index');
 
-Route::get('/faktury', [InvoicesController::class, 'index'])->name('invoices.index');
+    Route::get('/faktury/nowa', [InvoicesController::class, 'create'])->name('invoices.create');
 
-Route::get('/faktury/nowa', [InvoicesController::class, 'create'])->name('invoices.create');
+    Route::get('/faktury/edytuj/{id}', [InvoicesController::class, 'edit'])->name('invoices.edit');
 
-Route::get('/faktury/edytuj/{id}', [InvoicesController::class, 'edit'])->name('invoices.edit');
+    Route::put('/faktury/aktualizuj/{id}', [InvoicesController::class, 'update'])->name('invoices.update');
 
-Route::put('/faktury/aktualizuj/{id}', [InvoicesController::class, 'update'])->name('invoices.update');
+    Route::delete('/faktury/usun/{id}', [InvoicesController::class, 'delete'])->name('invoices.delete');
 
-Route::delete('/faktury/usun/{id}', [InvoicesController::class, 'delete'])->name('invoices.delete');
+    Route::post('/faktury/zapisz', [InvoicesController::class, 'store'])->name('invoices.store');
 
-Route::post('/faktury/zapisz', [InvoicesController::class, 'store'])->name('invoices.store');
+    Route::resource('klienci', CustomerController::class, ['names' => 'customers']);
+});
 
-Route::resource('klienci', CustomerController::class, ['names' => 'customers']);
+Auth::routes();
 
