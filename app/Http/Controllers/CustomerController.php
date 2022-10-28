@@ -15,7 +15,7 @@ class CustomerController extends Controller
     public function index()
     {
 
-        $customers = Customer::all();
+        $customers = Customer::where('user_id', auth()->id())->get();
         return view('customers.index', ['customers' => $customers]);
     }
 
@@ -48,6 +48,7 @@ class CustomerController extends Controller
         $customer->name = $request->name;
         $customer->address = $request->address;
         $customer->nip = $request->nip;
+        $customer->user_id = auth()->id();
 
         $customer->save();
 
@@ -62,7 +63,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        $customer = Customer::with('invoices')->where('id', $id)->firstOrFail();
+        $customer = Customer::with('invoices')->where('id', $id)->where('user_id', auth()->id())->firstOrFail();
 
         return view('customers.single', compact('customer'));
     }
@@ -75,7 +76,12 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        $customer = Customer::find($id);
+        $customer = Customer::where('id', $id)->where('user_id', auth()->id())->first();
+        if(!$customer)
+        {
+            abort(403);
+            return;
+        }
         return view('customers.edit', ['customer' => $customer]);
     }
 
@@ -88,6 +94,12 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $customer = Customer::where('id', $id)->where('user_id', auth()->id())->first();
+        if(!$customer)
+        {
+            abort(403);
+            return;
+        }
         $customer = Customer::find($id);
         $customer->name = $request->name;
         $customer->address = $request->address;
@@ -106,7 +118,12 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        Customer::destroy($id);
-        return redirect()->route('customers.index')->with('messege', 'Klient został usunięty z bazy');
+        if(Customer::where('id', $id)->where('user_id', auth()->id())->first())
+        {
+            Customer::destroy($id);
+            return redirect()->route('customers.index')->with('messege', 'Klient został usunięty z bazy');
+        }
+
+        abort(403);
     }
 }

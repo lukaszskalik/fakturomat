@@ -11,7 +11,7 @@ class InvoicesController extends Controller
 {
     public function index()
     {
-        $invoices = Invoice::with('customer')->get();
+        $invoices = Invoice::with('customer')->where('user_id', auth()->id())->get();
         return view('invoices.index', ['list' => $invoices]);
     }
 
@@ -23,11 +23,13 @@ class InvoicesController extends Controller
 
     public function store(InvoiceStoreRequest $request)
     {
+
         $invoice = new Invoice();
         $invoice->number = $request->number;
         $invoice->total = $request->total;
         $invoice->date = $request->date;
         $invoice->customer_id = $request->customer;
+        $invoice->user_id = auth()->id();
 
         $invoice->save();
 
@@ -36,12 +38,24 @@ class InvoicesController extends Controller
 
     public function edit($id)
     {
-        $invoice = Invoice::find($id);
-        return view('invoices.edit', ['invoice' => $invoice]);
+        $invoice = Invoice::where('id', $id)->where('user_id', auth()->id())->first();
+        if($invoice)
+        {
+            return view('invoices.edit', ['invoice' => $invoice]);
+        }
+        else{
+            abort(403);
+        }
     }
 
     public function update($id, Request $request)
     {
+        $invoice = Invoice::where('id', $id)->where('user_id', auth()->id())->first();
+        if(!$invoice)
+        {
+            abort(403);
+            return;
+        }
         $invoice = Invoice::find($id);
         $invoice->number = $request->number;
         $invoice->total = $request->total;
@@ -54,7 +68,15 @@ class InvoicesController extends Controller
 
     public function delete($id)
     {
-        Invoice::destroy($id);
-        return redirect()->route('invoices.index')->with('messege', 'Faktura została usunięta');
+        if(Invoice::where('id', $id)->where('user_id', auth()->id())->first())
+        {
+            Invoice::destroy($id);
+            return redirect()->route('invoices.index')->with('messege', 'Faktura została usunięta');
+        }
+        else{
+            abort(403);
+            return;
+        }
+
     }
 }

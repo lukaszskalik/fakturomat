@@ -39,8 +39,8 @@
                                 <label class="input-group-text" for="inputGroupSelect01">Wybierz klienta</label>
                                 <select  name="customer" class="form-select" id="inputGroupSelect01">
                                   <option selected>Wybierz...</option>
-                                    @foreach ($customers as $item)
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                    @foreach (\App\Models\Customer::where('user_id', auth()->id())->get() as $item)
+                                    <option value="{{ $item->id }}">{{$item->name}}</option>
                                     @endforeach
                                 </select>
                             </div>

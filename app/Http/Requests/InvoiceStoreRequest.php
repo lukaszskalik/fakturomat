@@ -27,7 +27,7 @@ class InvoiceStoreRequest extends FormRequest
             'number' => 'required',
             'total' => 'required|numeric',
             'date' => 'required|date',
-            'customer_id' => 'required|integer'
+            //'customer_id' => 'required'
         ];
     }
 }

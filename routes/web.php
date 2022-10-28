@@ -33,6 +33,10 @@ Route::middleware('auth')->group(function() {
     Route::post('/faktury/zapisz', [InvoicesController::class, 'store'])->name('invoices.store');
 
     Route::resource('klienci', CustomerController::class, ['names' => 'customers']);
+
+    Route::view('/profil', 'auth.profile')->name('profile');
+
+    Route::view('/zmiana-hasla', 'auth.passwords.change')->name('password.change');
 });
 
 Auth::routes();
