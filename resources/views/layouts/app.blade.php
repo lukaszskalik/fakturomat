@@ -48,6 +48,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    @if (Auth::user()->is_admin)
+                                        <a class="dropdown-item" href="{{ route('admin.panel') }}">Panel Administratora</a>
+                                    @endif
+
                                     <a class="dropdown-item" href="{{ route('profile') }}">Mój profil</a>
                                     <a class="dropdown-item" href="{{ route('password.change') }}">Zmiana hasła</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"

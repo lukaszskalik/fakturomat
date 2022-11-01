@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InvoicesController;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,11 @@ Route::middleware('auth')->group(function() {
     Route::view('/profil', 'auth.profile')->name('profile');
 
     Route::view('/zmiana-hasla', 'auth.passwords.change')->name('password.change');
+
+    Route::middleware('is_admin')->prefix('admin')->group(function() {
+        Route::view('panel', 'admin.panel')->name('admin.panel');
+        Route::put('zmien-dostep/{user_id}', [AdminController::class, 'changeAccessForUser'])->name('admin.change');
+    });
 });
 
 Auth::routes();
