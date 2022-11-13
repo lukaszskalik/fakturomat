@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InvoiceStoreRequest;
+use App\Models\Attachment;
 use App\Models\Customer;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class InvoicesController extends Controller
 {
     public function index()
     {
-        $invoices = Invoice::with('customer')->where('user_id', auth()->id())->get();
+        $invoices = Invoice::with(['customer', 'attachments'])->where('user_id', auth()->id())->get();
         return view('invoices.index', ['list' => $invoices]);
     }
 
@@ -32,6 +34,16 @@ class InvoicesController extends Controller
         $invoice->user_id = auth()->id();
 
         $invoice->save();
+
+        if($request->attachment)
+        {
+            $path = $request->attachment->store('public/attachments');
+            $attachment = new Attachment();
+            $attachment->path = $path;
+            $attachment->invoice_id = $invoice->id;
+            $attachment->save();
+
+        }
 
         return redirect()->route('invoices.index')->with('messege', 'Faktura dodana poprawnie');
     }
@@ -70,6 +82,7 @@ class InvoicesController extends Controller
     {
         if(Invoice::where('id', $id)->where('user_id', auth()->id())->first())
         {
+            Attachment::where('invoice_id', $id)->delete();
             Invoice::destroy($id);
             return redirect()->route('invoices.index')->with('messege', 'Faktura została usunięta');
         }
@@ -78,5 +91,18 @@ class InvoicesController extends Controller
             return;
         }
 
+    }
+
+    public function saveAsPdf($id)
+    {
+        $invoice = Invoice::with('customer')->where('id', $id)->where('user_id', auth()->id())->first();
+
+        if (!$invoice)
+        {
+            abort(403);
+        }
+
+        $pdf = PDF::loadView('invoices.pdf', compact('invoice'));
+        return $pdf->download('faktura.pdf');
     }
 }

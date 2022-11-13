@@ -12,4 +12,7 @@ class Invoice extends Model
     public function customer(){
         return $this->belongsTo('App\Models\Customer');
     }
+    public function attachments(){
+        return $this->hasMany('App\Models\Attachment');
+    }
 }

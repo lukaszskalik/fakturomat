@@ -32,7 +32,7 @@
                         <!-- To make this form functional, sign up at-->
                         <!-- https://startbootstrap.com/solution/contact-forms-->
                         <!-- to get an API token!-->
-                        <form action="{{ route('invoices.store') }}" method="POST" id="invoicesAdd" data-sb-form-api-token="API_TOKEN">
+                        <form enctype="multipart/form-data" action="{{ route('invoices.store') }}" method="POST" id="invoicesAdd" data-sb-form-api-token="API_TOKEN">
                             {{ csrf_field() }}
                             <!-- Customer-->
                             <div class="input-group mb-3">
@@ -62,6 +62,10 @@
                                 <input class="form-control" id="date" type="text" value="{{ old('date') }}" name="date" placeholder="xxxx-xx-xx" data-sb-validations="required" />
                                 <label for="date">Data Faktury</label>
                                 <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="attachment" type="file" name="attachment" placeholder="Wybierz plik" />
+                                <label for="date">Załącznik</label>
                             </div>
 
                             <!-- Submit success message-->

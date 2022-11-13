@@ -30,6 +30,8 @@
                         <th scope="col">Data</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                       </tr>
                     </thead>
 
@@ -41,7 +43,13 @@
                             <td>{{$invoice->total}}</td>
                             <td>{{$invoice->customer->name}}</td>
                             <td>{{$invoice->date}}</td>
+                            <td>
+                                @if (count($invoice->attachments) > 0)
+                                    <a href="{{ Storage::url($invoice->attachments[0]->path) }}" class="btn btn-warning">Załącznik</a>
+                                @endif
+                            </td>
                             <td><a href="{{ route('invoices.edit', ['id' => $invoice->id]) }}" class="btn btn-success">Edytuj</a></td>
+                            <td><a href="{{ route('invoices.export', ['id' => $invoice->id]) }}" class="btn btn-info">Pdf</a></td>
                             <td>
                               <form method="POST" action="{{ route('invoices.delete', ['id' => $invoice->id]) }}">
                                 @csrf

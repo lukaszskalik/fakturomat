@@ -25,6 +25,8 @@ Route::middleware('auth')->group(function() {
 
     Route::get('/faktury/nowa', [InvoicesController::class, 'create'])->name('invoices.create');
 
+    Route::get('/faktury/pobierz/{id}', [InvoicesController::class, 'saveAsPdf'])->name('invoices.export');
+
     Route::get('/faktury/edytuj/{id}', [InvoicesController::class, 'edit'])->name('invoices.edit');
 
     Route::put('/faktury/aktualizuj/{id}', [InvoicesController::class, 'update'])->name('invoices.update');
@@ -38,6 +40,8 @@ Route::middleware('auth')->group(function() {
     Route::view('/profil', 'auth.profile')->name('profile');
 
     Route::view('/zmiana-hasla', 'auth.passwords.change')->name('password.change');
+
+    Route::view('/statystyki', 'stats')->name('stats');
 
     Route::middleware('is_admin')->prefix('admin')->group(function() {
         Route::view('panel', 'admin.panel')->name('admin.panel');
