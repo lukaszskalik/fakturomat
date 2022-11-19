@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function() {
 
     Route::middleware('is_admin')->prefix('admin')->group(function() {
         Route::view('panel', 'admin.panel')->name('admin.panel');
+
+        Route::get('uzytkownicy/eksport', [AdminController::class, 'exportUsers'])->name('users.export');
+
         Route::put('zmien-dostep/{user_id}', [AdminController::class, 'changeAccessForUser'])->name('admin.change');
     });
 });
