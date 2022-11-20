@@ -43,6 +43,11 @@ Route::middleware('auth')->group(function() {
 
     Route::view('/statystyki', 'stats')->name('stats');
 
+    Route::get('/tokens/create', function () {
+        $token = Auth::user()->createToken("klucz");
+        return ['token' => $token->plainTextToken];
+    });
+
     Route::middleware('is_admin')->prefix('admin')->group(function() {
         Route::view('panel', 'admin.panel')->name('admin.panel');
 
