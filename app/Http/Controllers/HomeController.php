@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\WeatherService;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -21,8 +22,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(WeatherService $weatherService)
     {
-        return view('home');
+        $weather = $weatherService->getKrakow();
+        return view('index', ['weather' => $weather]);
     }
 }

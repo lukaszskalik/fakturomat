@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    
+
+
 
         <!-- Masthead-->
         <header class="masthead bg-primary text-white text-center">
@@ -18,11 +19,36 @@
                 </div>
                 <!-- Masthead Subheading-->
                 <p class="masthead-subheading font-weight-light mb-0">Twoje Faktury w jednym miejscu...</p>
+
             </div>
         </header>
         <!-- Portfolio Section-->
         <section class="page-section portfolio" id="portfolio">
             <div class="container">
+                <h3>Prognoza pogody dla miasta Kraków: <img src="{{ URL::asset('http://openweathermap.org/img/wn/'. $weather->weather[0]->icon . '@2x.png')}}" ></h3>
+                <p>
+                    Temperatura: {{ round($weather->main->temp) }}° C
+                    @if ($weather->main->temp < 0)
+                        <img src="{{asset('assets/img/weather/temperature.png')}}" width="25">
+                    @else
+                        <img src="{{asset('assets/img/weather/hot.png')}}" width="25">
+                    @endif
+                </p>
+                <p>
+                    Temperatura odczuwalna: {{ round($weather->main->feels_like) }}° C
+                    @if ($weather->main->temp < 0)
+                        <img src="{{asset('assets/img/weather/temperature.png')}}" width="25">
+                    @else
+                        <img src="{{asset('assets/img/weather/hot.png')}}" width="25">
+                    @endif
+                </p>
+                <p>Ciśnienie: {{ $weather->main->pressure }} hPa
+                    <img src="{{asset('assets/img/weather/thermometer.png')}}" width="25">
+                </p>
+                <p>
+                    Wilgotność: {{ $weather->main->humidity }}%
+                    <img src="{{asset('assets/img/weather/humidity.png')}}" width="25">
+                </p>
                 <!-- Portfolio Section Heading-->
                 <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Lista Faktur</h2>
                 <!-- Icon Divider-->

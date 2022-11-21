@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Services\WeatherService;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -14,7 +15,6 @@ class CustomerController extends Controller
      */
     public function index()
     {
-
         $customers = Customer::where('user_id', auth()->id())->get();
         return view('customers.index', ['customers' => $customers]);
     }
